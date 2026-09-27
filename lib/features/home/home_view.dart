@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/models/product.dart';
+import '../favorites/favorites_view_model.dart';
 import 'home_view_model.dart';
 import 'widgets/bottom_navigation.dart';
 import 'widgets/app_drawer.dart';
@@ -33,7 +34,10 @@ class HomeView extends StatelessWidget {
         ),
       ),
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+        IconButton(
+          onPressed: () => context.push('/shop'),
+          icon: const Icon(Icons.search),
+        ),
         IconButton(
           onPressed: () {
             context.push('/cart');
@@ -59,7 +63,7 @@ class HomeView extends StatelessWidget {
   Widget _buildBody(BuildContext context, HomeViewModel viewModel) {
     return ListView(
       children: [
-        _buildHero(),
+        _buildHero(context),
 
         const SizedBox(height: 36),
 
@@ -116,7 +120,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildHero() {
+  Widget _buildHero(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -150,7 +154,7 @@ class HomeView extends StatelessWidget {
 
               OutlinedButton(
                 onPressed: () {
-                  // Переходим в каталог.
+                  context.push('/shop');
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -289,10 +293,22 @@ class HomeView extends StatelessWidget {
                   },
                 ),
 
-                const Positioned(
+                Positioned(
                   right: 10,
                   bottom: 10,
-                  child: Icon(Icons.favorite_border, color: Colors.white),
+                  child: Consumer<FavoritesViewModel>(
+                    builder: (context, favorites, child) {
+                      final isFavorite = favorites.isFavorite(product);
+
+                      return IconButton(
+                        onPressed: () => favorites.toggleFavorite(product),
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: const Color(0xFFDD8560),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

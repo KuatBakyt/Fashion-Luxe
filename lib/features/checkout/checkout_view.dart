@@ -118,17 +118,6 @@ class CheckoutView extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 16),
-
-            _PaymentOption(
-              icon: Icons.credit_card,
-              title: 'Credit / Debit Card',
-              selected: checkout.paymentMethod == PaymentMethod.card,
-              onTap: () {
-                checkout.selectPayment(PaymentMethod.card);
-              },
-            ),
-
             const SizedBox(height: 12),
 
             _PaymentOption(
@@ -138,6 +127,14 @@ class CheckoutView extends StatelessWidget {
               onTap: () {
                 checkout.selectPayment(PaymentMethod.cash);
               },
+            ),
+
+            const Padding(
+              padding: EdgeInsets.only(top: 12),
+              child: Text(
+                'Demo checkout: no real payment is processed.',
+                style: TextStyle(color: Colors.grey, fontSize: 12),
+              ),
             ),
 
             const Text(
@@ -197,7 +194,8 @@ class CheckoutView extends StatelessWidget {
           width: double.infinity,
           height: 54,
           child: FilledButton(
-            onPressed: !checkout.isValid || checkout.isLoading
+            onPressed:
+                !checkout.isValid || checkout.isLoading || cart.items.isEmpty
                 ? null
                 : () async {
                     final order = await checkout.placeOrder(

@@ -1,17 +1,28 @@
-# luxe
+# Fashion Luxe
 
-A new Flutter project.
+Учебное Flutter-приложение магазина одежды.
 
-## Getting Started
+## Возможности
 
-This project is a starting point for a Flutter application.
+- Каталог товаров с поиском, категориями и сортировкой
+- Экран товара и выбор размера
+- Избранное и корзина
+- Оформление демонстрационного заказа
 
-A few resources to get you started if this is your first Flutter project:
+## Технологии
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Flutter, Dart, Provider, go_router, Dio.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Данные
+
+Товары загружаются из Fake Store API.
+Создание заказа имитируется локально. Реальная оплата не подключена.
+
+## Запуск
+
+flutter pub get
+flutter run -d chrome
+
+## Проверка
+
+flutter test
