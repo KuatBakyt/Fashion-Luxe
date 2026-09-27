@@ -44,13 +44,13 @@ class App extends StatelessWidget {
         ),
 
         ProxyProvider<ProductService, ProductRepository>(
-          update: (_, service, __) {
+          update: (_, service, _) {
             return ProductRepository(service);
           },
         ),
 
         ProxyProvider<OrderService, OrderRepository>(
-          update: (_, service, __) {
+          update: (_, service, _) {
             return OrderRepository(
               service: service,
             );

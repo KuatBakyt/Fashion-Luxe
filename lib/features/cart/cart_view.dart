@@ -64,7 +64,7 @@ class CartView extends StatelessWidget {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: cart.items.length,
-      separatorBuilder: (_, __) {
+      separatorBuilder: (_, _) {
         return const Divider(height: 32);
       },
       itemBuilder: (context, index) {

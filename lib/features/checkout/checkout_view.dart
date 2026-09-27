@@ -332,10 +332,10 @@ class _DeliveryOption extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Radio<bool>(
-              value: true,
-              groupValue: selected,
-              onChanged: (_) => onTap(),
+            Icon(
+              selected
+                  ? Icons.radio_button_checked
+                  : Icons.radio_button_unchecked,
             ),
 
             const SizedBox(width: 8),

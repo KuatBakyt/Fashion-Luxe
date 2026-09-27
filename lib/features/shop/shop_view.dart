@@ -94,7 +94,7 @@ class ShopView extends StatelessWidget {
 
         itemCount: viewModel.categories.length,
 
-        separatorBuilder: (_, __) {
+        separatorBuilder: (_, _) {
           return const SizedBox(width: 8);
         },
 

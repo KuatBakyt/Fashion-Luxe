@@ -210,7 +210,7 @@ class HomeView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         scrollDirection: Axis.horizontal,
         itemCount: viewModel.categories.length,
-        separatorBuilder: (_, __) {
+        separatorBuilder: (_, _) {
           return const SizedBox(width: 8);
         },
         itemBuilder: (context, index) {
