@@ -26,6 +26,18 @@ class ProductService {
     }
   }
 
+  Future<Product> getProductById(int id) async {
+  try {
+    final response = await dio.get('/products/$id');
+
+    return Product.fromJson(
+      response.data as Map<String, dynamic>,
+    );
+  } on DioException catch (e) {
+    throw _handleDioException(e);
+  }
+}
+
   AppException _handleDioException(DioException e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:

@@ -52,6 +52,11 @@ class ProductDetailView extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context, bool isFavorite) {
     return AppBar(
+      leading: IconButton(
+        tooltip: 'Back to catalog',
+        onPressed: () => context.go('/shop'),
+        icon: const Icon(Icons.arrow_back),
+      ),
       title: const Text(
         'LUXE',
         style: TextStyle(letterSpacing: 6, fontWeight: FontWeight.w500),

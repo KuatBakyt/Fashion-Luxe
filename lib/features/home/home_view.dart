@@ -263,7 +263,7 @@ class HomeView extends StatelessWidget {
   Widget _buildProductCard(BuildContext context, Product product) {
     return GestureDetector(
       onTap: () {
-        context.push('/product/${product.id}', extra: product);
+        context.go('/product/${product.id}');
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
