@@ -1,30 +1,36 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:luxe/data/models/order.dart';
+import 'package:luxe/data/models/product.dart';
+import 'package:luxe/data/repositories/order_repository.dart';
+import 'package:luxe/data/services/order_service.dart';
+import 'package:luxe/features/cart/cart_view_model.dart';
+import 'package:luxe/features/checkout/checkout_view_model.dart';
 
-import 'package:luxe/main.dart';
+class _FakeOrderService extends OrderService {
+  @override
+  Future<Order> createOrder(Order order) async => order;
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('checkout uses selected shipping, address and cash payment', () async {
+    final cart = CartViewModel();
+    const product = Product(id: 1, name: 'Dress', category: 'clothing',
+      imageUrl: '', price: 20, description: '');
+    cart.addToCart(product, 'M');
+    final checkout = CheckoutViewModel(
+      repository: OrderRepository(service: _FakeOrderService()),
+    );
+    checkout.setFullName('A Customer');
+    checkout.setPhone('123456');
+    checkout.setCity('Almaty');
+    checkout.setAddress('Main Street 1');
+    checkout.selectDelivery(DeliveryMethod.express);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    final order = await checkout.placeOrder(cartTotal: cart.totalPrice);
+    expect(order?.totalPrice, 35);
+    expect(order?.address, 'Main Street 1');
+    expect(order?.paymentMethod, 'cash');
+    checkout.reset();
+    expect(checkout.isValid, isFalse);
   });
 }

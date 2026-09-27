@@ -6,6 +6,7 @@ import '../../data/models/product.dart';
 import 'home_view_model.dart';
 import 'widgets/bottom_navigation.dart';
 import 'widgets/app_drawer.dart';
+import '../favorites/favorites_view_model.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -33,7 +34,7 @@ class HomeView extends StatelessWidget {
         ),
       ),
       actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+        IconButton(onPressed: () => context.push('/shop?search=1'), icon: const Icon(Icons.search)),
         IconButton(
           onPressed: () {
             context.push('/cart');
@@ -150,7 +151,7 @@ class HomeView extends StatelessWidget {
 
               OutlinedButton(
                 onPressed: () {
-                  // Переходим в каталог.
+                  context.push('/shop');
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -289,10 +290,17 @@ class HomeView extends StatelessWidget {
                   },
                 ),
 
-                const Positioned(
+                Positioned(
                   right: 10,
                   bottom: 10,
-                  child: Icon(Icons.favorite_border, color: Colors.white),
+                  child: IconButton(
+                    onPressed: () => context.read<FavoritesViewModel>().toggleFavorite(product),
+                    icon: Icon(
+                      context.watch<FavoritesViewModel>().isFavorite(product)
+                          ? Icons.favorite : Icons.favorite_border,
+                      color: const Color(0xFFDD8560),
+                    ),
+                  ),
                 ),
               ],
             ),

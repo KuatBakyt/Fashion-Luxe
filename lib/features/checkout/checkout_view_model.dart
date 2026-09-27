@@ -15,7 +15,7 @@ class CheckoutViewModel extends ChangeNotifier {
   final OrderRepository repository;
 
   DeliveryMethod _deliveryMethod = DeliveryMethod.standard;
-  PaymentMethod _paymentMethod = PaymentMethod.card;
+  PaymentMethod _paymentMethod = PaymentMethod.cash;
 
   String get fullName => _fullName;
   String get phone => _phone;
@@ -78,8 +78,19 @@ class CheckoutViewModel extends ChangeNotifier {
         _city.trim().isNotEmpty;
   }
 
+  void reset() {
+    _fullName = '';
+    _phone = '';
+    _address = '';
+    _city = '';
+    _deliveryMethod = DeliveryMethod.standard;
+    _paymentMethod = PaymentMethod.cash;
+    _error = null;
+    notifyListeners();
+  }
+
   Future<Order?> placeOrder({required double cartTotal}) async {
-    if (!isValid) {
+    if (!isValid || cartTotal <= 0 || _isLoading) {
       return null;
     }
 

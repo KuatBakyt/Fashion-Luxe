@@ -6,8 +6,33 @@ import 'package:provider/provider.dart';
 import 'shop_view_model.dart';
 import 'product_state.dart';
 
-class ShopView extends StatelessWidget {
+class ShopView extends StatefulWidget {
   const ShopView({super.key});
+
+  @override
+  State<ShopView> createState() => _ShopViewState();
+}
+
+class _ShopViewState extends State<ShopView> {
+  final _searchController = TextEditingController();
+  final _searchFocus = FocusNode();
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (GoRouterState.of(context).uri.queryParameters['search'] == '1') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) _searchFocus.requestFocus();
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _searchFocus.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +103,18 @@ class ShopView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
       child: SearchBar(
+        controller: _searchController,
+        focusNode: _searchFocus,
         hintText: 'Search products...',
         leading: const Icon(Icons.search),
+        trailing: [IconButton(
+          tooltip: 'Clear search',
+          onPressed: () {
+            _searchController.clear();
+            viewModel.searchProducts('');
+          },
+          icon: const Icon(Icons.close),
+        )],
         onChanged: viewModel.searchProducts,
       ),
     );
