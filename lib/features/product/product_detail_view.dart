@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/models/product.dart';
@@ -57,11 +56,6 @@ class ProductDetailView extends StatelessWidget {
         style: TextStyle(letterSpacing: 6, fontWeight: FontWeight.w500),
       ),
       actions: [
-        IconButton(
-          tooltip: 'Bag',
-          onPressed: () => context.push('/cart'),
-          icon: const Icon(Icons.shopping_bag_outlined),
-        ),
         IconButton(
           onPressed: () {
             context.read<FavoritesViewModel>().toggleFavorite(product);

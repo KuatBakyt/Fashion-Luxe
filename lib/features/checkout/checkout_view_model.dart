@@ -5,8 +5,6 @@ import '../../data/repositories/order_repository.dart';
 
 enum DeliveryMethod { standard, express }
 
-enum PaymentMethod { card, cash }
-
 class CheckoutViewModel extends ChangeNotifier {
   String _fullName = '';
   String _phone = '';
@@ -15,7 +13,6 @@ class CheckoutViewModel extends ChangeNotifier {
   final OrderRepository repository;
 
   DeliveryMethod _deliveryMethod = DeliveryMethod.standard;
-  PaymentMethod _paymentMethod = PaymentMethod.cash;
 
   String get fullName => _fullName;
   String get phone => _phone;
@@ -23,7 +20,6 @@ class CheckoutViewModel extends ChangeNotifier {
   String get city => _city;
 
   DeliveryMethod get deliveryMethod => _deliveryMethod;
-  PaymentMethod get paymentMethod => _paymentMethod;
   CheckoutViewModel({required this.repository});
 
   bool _isLoading = false;
@@ -66,11 +62,6 @@ class CheckoutViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void selectPayment(PaymentMethod method) {
-    _paymentMethod = method;
-    notifyListeners();
-  }
-
   bool get isValid {
     return _fullName.trim().isNotEmpty &&
         _phone.trim().isNotEmpty &&
@@ -84,7 +75,6 @@ class CheckoutViewModel extends ChangeNotifier {
     _address = '';
     _city = '';
     _deliveryMethod = DeliveryMethod.standard;
-    _paymentMethod = PaymentMethod.cash;
     _error = null;
     notifyListeners();
   }
@@ -110,7 +100,7 @@ class CheckoutViewModel extends ChangeNotifier {
         address: address,
         totalPrice: total,
         deliveryMethod: deliveryMethod.name,
-        paymentMethod: paymentMethod.name,
+        paymentMethod: 'cash',
       );
 
       final result = await repository.createOrder(order);

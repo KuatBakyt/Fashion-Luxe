@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/models/order.dart';
-import 'checkout_ui.dart';
 
 class OrderSuccessView extends StatelessWidget {
   final Order order;
@@ -15,24 +14,22 @@ class OrderSuccessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('LUXE', style: TextStyle(letterSpacing: 6))),
       body: SafeArea(
-        child: ListView(
+        child: Padding(
           padding: const EdgeInsets.all(24),
-          children: [
-              const SizedBox(height: 36),
+          child: Column(
+            children: [
+              const Spacer(),
 
               const Icon(
                 Icons.check_circle_outline,
-                size: 80,
-                color: checkoutAccent,
+                size: 90,
               ),
 
               const SizedBox(height: 30),
 
               const Text(
                 'ORDER CONFIRMED',
-                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
                   letterSpacing: 3,
@@ -44,7 +41,6 @@ class OrderSuccessView extends StatelessWidget {
 
               const Text(
                 'Thank you for your purchase.',
-                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.grey,
                 ),
@@ -86,7 +82,7 @@ class OrderSuccessView extends StatelessWidget {
                     '\$${order.totalPrice.toStringAsFixed(2)}',
               ),
 
-              const SizedBox(height: 48),
+              const Spacer(),
 
               SizedBox(
                 width: double.infinity,
@@ -101,6 +97,7 @@ class OrderSuccessView extends StatelessWidget {
                 ),
               ),
             ],
+          ),
         ),
       ),
     );
