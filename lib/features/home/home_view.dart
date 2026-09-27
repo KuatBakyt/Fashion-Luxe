@@ -60,7 +60,7 @@ class HomeView extends StatelessWidget {
   Widget _buildBody(BuildContext context, HomeViewModel viewModel) {
     return ListView(
       children: [
-        _buildHero(),
+        _buildHero(context),
 
         const SizedBox(height: 36),
 
@@ -117,7 +117,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildHero() {
+  Widget _buildHero(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
