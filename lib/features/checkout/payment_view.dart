@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../cart/cart_view_model.dart';
 import 'checkout_view_model.dart';
+import 'checkout_ui.dart';
 
 class PaymentView extends StatelessWidget {
   const PaymentView({super.key});
@@ -13,10 +14,11 @@ class PaymentView extends StatelessWidget {
     final checkout = context.watch<CheckoutViewModel>();
     final cart = context.watch<CartViewModel>();
     return Scaffold(
-      appBar: AppBar(title: const Text('PAYMENT')),
+      appBar: AppBar(title: const Text('LUXE', style: TextStyle(letterSpacing: 6))),
       body: cart.items.isEmpty ? const Center(child: Text('Your bag is empty')) :
         ListView(padding: const EdgeInsets.all(20), children: [
-          const Text('PAYMENT METHOD', style: TextStyle(letterSpacing: 2)),
+          const CheckoutStepHeader(step: 3, title: 'PAYMENT'),
+          const CheckoutSectionTitle('PAYMENT METHOD'),
           RadioListTile<PaymentMethod>(
             title: const Text('Cash on delivery'),
             value: PaymentMethod.cash,
@@ -24,10 +26,13 @@ class PaymentView extends StatelessWidget {
             onChanged: (value) { if (value != null) checkout.selectPayment(value); },
           ),
           const Divider(),
-          const Text('Online card payment is not connected yet.'),
+          const Padding(padding: EdgeInsets.symmetric(vertical: 12),
+            child: Text('Online card payment is not connected yet.',
+              style: TextStyle(color: Colors.grey, fontSize: 13))),
           const SizedBox(height: 24),
-          Text('Total: \$${(cart.totalPrice + checkout.shippingPrice).toStringAsFixed(2)}',
-            style: const TextStyle(fontSize: 20)),
+          const Divider(),
+          CheckoutTotal(label: 'TOTAL', prominent: true,
+            value: '\$${(cart.totalPrice + checkout.shippingPrice).toStringAsFixed(2)}'),
           if (!checkout.isValid) const Padding(
             padding: EdgeInsets.only(top: 16),
             child: Text('Enter your shipping address before placing an order.'),

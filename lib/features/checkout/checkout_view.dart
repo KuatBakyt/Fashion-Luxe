@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../cart/cart_view_model.dart';
 import 'checkout_view_model.dart';
+import 'checkout_ui.dart';
 
 class CheckoutView extends StatelessWidget {
   const CheckoutView({super.key});
@@ -13,13 +14,14 @@ class CheckoutView extends StatelessWidget {
     final cart = context.watch<CartViewModel>();
     final checkout = context.watch<CheckoutViewModel>();
     return Scaffold(
-      appBar: AppBar(title: const Text('CHECKOUT')),
+      appBar: AppBar(title: const Text('LUXE', style: TextStyle(letterSpacing: 6))),
       body: cart.items.isEmpty
           ? const Center(child: Text('Your bag is empty'))
           : ListView(
               padding: const EdgeInsets.all(20),
               children: [
-                const Text('ORDER SUMMARY', style: TextStyle(letterSpacing: 2)),
+                const CheckoutStepHeader(step: 1, title: 'CHECKOUT'),
+                const CheckoutSectionTitle('ORDER SUMMARY'),
                 const SizedBox(height: 16),
                 ...cart.items.map((item) => ListTile(
                   contentPadding: EdgeInsets.zero,
@@ -28,16 +30,14 @@ class CheckoutView extends StatelessWidget {
                   trailing: Text('\$${item.totalPrice.toStringAsFixed(2)}'),
                 )),
                 const Divider(),
-                ListTile(title: const Text('Subtotal'),
-                  trailing: Text('\$${cart.totalPrice.toStringAsFixed(2)}')),
-                ListTile(title: const Text('Shipping'),
-                  trailing: Text(checkout.shippingPrice == 0 ? 'FREE'
-                    : '\$${checkout.shippingPrice.toStringAsFixed(2)}')),
+                CheckoutTotal(label: 'Subtotal', value: '\$${cart.totalPrice.toStringAsFixed(2)}'),
+                CheckoutTotal(label: 'Shipping', value: checkout.shippingPrice == 0 ? 'FREE'
+                    : '\$${checkout.shippingPrice.toStringAsFixed(2)}'),
                 const Divider(),
-                ListTile(title: const Text('TOTAL', style: TextStyle(fontWeight: FontWeight.bold)),
-                  trailing: Text('\$${(cart.totalPrice + checkout.shippingPrice).toStringAsFixed(2)}')),
+                CheckoutTotal(label: 'TOTAL', prominent: true,
+                  value: '\$${(cart.totalPrice + checkout.shippingPrice).toStringAsFixed(2)}'),
                 const SizedBox(height: 24),
-                const Text('DELIVERY METHOD', style: TextStyle(letterSpacing: 2)),
+                const CheckoutSectionTitle('DELIVERY METHOD'),
                 RadioListTile<DeliveryMethod>(
                   title: const Text('Standard · 5–7 business days · FREE'),
                   value: DeliveryMethod.standard,
