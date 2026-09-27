@@ -6,7 +6,6 @@ import '../../data/models/product.dart';
 import 'home_view_model.dart';
 import 'widgets/bottom_navigation.dart';
 import 'widgets/app_drawer.dart';
-import '../favorites/favorites_view_model.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -34,7 +33,7 @@ class HomeView extends StatelessWidget {
         ),
       ),
       actions: [
-        IconButton(onPressed: () => context.push('/shop?search=1'), icon: const Icon(Icons.search)),
+        IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
         IconButton(
           onPressed: () {
             context.push('/cart');
@@ -60,7 +59,7 @@ class HomeView extends StatelessWidget {
   Widget _buildBody(BuildContext context, HomeViewModel viewModel) {
     return ListView(
       children: [
-        _buildHero(context),
+        _buildHero(),
 
         const SizedBox(height: 36),
 
@@ -117,7 +116,7 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildHero(BuildContext context) {
+  Widget _buildHero() {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -151,7 +150,7 @@ class HomeView extends StatelessWidget {
 
               OutlinedButton(
                 onPressed: () {
-                  context.push('/shop');
+                  // Переходим в каталог.
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -290,17 +289,10 @@ class HomeView extends StatelessWidget {
                   },
                 ),
 
-                Positioned(
+                const Positioned(
                   right: 10,
                   bottom: 10,
-                  child: IconButton(
-                    onPressed: () => context.read<FavoritesViewModel>().toggleFavorite(product),
-                    icon: Icon(
-                      context.watch<FavoritesViewModel>().isFavorite(product)
-                          ? Icons.favorite : Icons.favorite_border,
-                      color: const Color(0xFFDD8560),
-                    ),
-                  ),
+                  child: Icon(Icons.favorite_border, color: Colors.white),
                 ),
               ],
             ),

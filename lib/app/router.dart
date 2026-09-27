@@ -12,8 +12,6 @@ import '../features/cart/cart_view.dart';
 import '../features/favorites/favorites_view.dart';
 import '../features/checkout/checkout_view.dart';
 import '../features/checkout/order_success_view.dart';
-import '../features/checkout/shipping_address_view.dart';
-import '../features/checkout/payment_view.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -33,8 +31,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/product/:id',
       builder: (context, state) {
-        final product = state.extra;
-        if (product is! Product) return const ShopView();
+        final product = state.extra as Product;
 
         return ChangeNotifierProvider(
           create: (_) => ProductDetailViewModel(),
@@ -64,14 +61,6 @@ final GoRouter appRouter = GoRouter(
       path: '/checkout',
       builder: (context, state) =>
           const CheckoutView(),
-    ),
-    GoRoute(
-      path: '/checkout/address',
-      builder: (context, state) => const ShippingAddressView(),
-    ),
-    GoRoute(
-      path: '/checkout/payment',
-      builder: (context, state) => const PaymentView(),
     ),
 
     // ORDER SUCCESS
