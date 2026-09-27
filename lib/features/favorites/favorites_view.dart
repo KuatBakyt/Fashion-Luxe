@@ -17,10 +17,8 @@ class FavoritesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Favorites',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          'FAVORITES',
+          style: TextStyle(letterSpacing: 3, fontSize: 16),
         ),
       ),
 
@@ -56,10 +54,10 @@ class FavoritesView extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius:
-                                  BorderRadius.circular(8),
+                                  BorderRadius.zero,
                               child: Image.network(
                                 product.imageUrl,
-                                fit: BoxFit.contain,
+                                fit: BoxFit.cover,
 
                                 loadingBuilder: (
                                   context,

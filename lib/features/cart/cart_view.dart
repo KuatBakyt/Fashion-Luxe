@@ -15,10 +15,8 @@ class CartView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Bag',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+          'MY BAG',
+          style: TextStyle(letterSpacing: 3, fontSize: 16),
         ),
       ),
       body: cart.items.isEmpty
@@ -250,7 +248,7 @@ class CartView extends StatelessWidget {
                   context.push('/checkout');
                 },
                 child: const Text(
-                  'CHECKOUT',
+                  'PROCEED TO CHECKOUT',
                   style: TextStyle(
                     letterSpacing: 2,
                     fontSize: 13,

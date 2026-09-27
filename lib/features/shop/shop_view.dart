@@ -41,8 +41,8 @@ class _ShopViewState extends State<ShopView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Shop',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'LUXE',
+          style: TextStyle(letterSpacing: 6, fontWeight: FontWeight.w500),
         ),
         actions: [
           IconButton(
@@ -105,7 +105,7 @@ class _ShopViewState extends State<ShopView> {
       child: SearchBar(
         controller: _searchController,
         focusNode: _searchFocus,
-        hintText: 'Search products...',
+        hintText: 'SEARCH PRODUCTS',
         leading: const Icon(Icons.search),
         trailing: [IconButton(
           tooltip: 'Clear search',
@@ -179,11 +179,11 @@ class _ShopViewState extends State<ShopView> {
                   fit: StackFit.expand,
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.zero,
                       child: Image.network(
                         product.imageUrl,
                         width: double.infinity,
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) {
                             return child;
@@ -237,12 +237,12 @@ class _ShopViewState extends State<ShopView> {
                 product.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(fontWeight: FontWeight.w600),
+                style: const TextStyle(fontSize: 14, letterSpacing: 0.5),
               ),
               const SizedBox(height: 4),
               Text(
                 '\$${product.price.toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(color: Color(0xFFA8715A), fontSize: 15),
               ),
             ],
           ),
